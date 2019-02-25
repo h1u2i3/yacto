@@ -163,7 +163,14 @@ defmodule Yacto.Migration.GenMigration do
                 if Keyword.has_key?(opts, :name) do
                   opts
                 else
-                  [{:name, create_index_name(fields, Keyword.get(migration_opts, :index_name_max_length, :infinity))} | opts]
+                  [
+                    {:name,
+                     create_index_name(
+                       fields,
+                       Keyword.get(migration_opts, :index_name_max_length, :infinity)
+                     )}
+                    | opts
+                  ]
                 end
 
               "drop index(#{inspect(structure_to.source)}, #{inspect(fields)}, #{inspect(opts)})"
@@ -175,7 +182,14 @@ defmodule Yacto.Migration.GenMigration do
                 if Keyword.has_key?(opts, :name) do
                   opts
                 else
-                  [{:name, create_index_name(fields, Keyword.get(migration_opts, :index_name_max_length, :infinity))} | opts]
+                  [
+                    {:name,
+                     create_index_name(
+                       fields,
+                       Keyword.get(migration_opts, :index_name_max_length, :infinity)
+                     )}
+                    | opts
+                  ]
                 end
 
               "create index(#{inspect(structure_to.source)}, #{inspect(fields)}, #{inspect(opts)})"
@@ -362,9 +376,16 @@ defmodule Yacto.Migration.GenMigration do
               []
 
             _ ->
-              ["alter table(#{inspect(structure_to.source)}) do"] ++
-                generate_fields(diff.types, diff.meta.attrs, structure_to, migration_opts) ++
-                ["end"] ++ generate_indices(diff.meta.indices, structure_to, migration_opts)
+              generated_fields =
+                generate_fields(diff.types, diff.meta.attrs, structure_to, migration_opts)
+
+              if Enum.empty?(generated_fields) do
+                []
+              else
+                ["alter table(#{inspect(structure_to.source)}) do"] ++
+                  generated_fields ++
+                  ["end"] ++ generate_indices(diff.meta.indices, structure_to, migration_opts)
+              end
           end
 
       lines
