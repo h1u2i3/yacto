@@ -76,8 +76,13 @@ defmodule Yacto.Migration.Util do
 
   def is_schema_module?(mod), do: function_exported?(mod, :__schema__, 1)
 
-  def get_all_schema(app, prefix \\ nil) do
-    mods = Application.spec(app, :modules)
+  def get_all_schema(app, modules \\ nil, prefix \\ nil) do
+    mods =
+      if modules do
+        modules
+      else
+        Application.spec(app, :modules)
+      end
 
     Enum.filter(mods, fn mod ->
       Code.ensure_loaded(mod)
