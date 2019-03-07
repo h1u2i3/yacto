@@ -39,7 +39,7 @@ defmodule Yacto.Mixfile do
       {:ecto_sql, "~> 3.0.0"},
       {:ex_doc, "~> 0.19.1", only: :dev, runtime: false},
       {:mariaex, "~> 0.9.0"},
-      {:uuid, "~> 1.1"},
+      {:elixir_uuid, "~> 1.2.0"},
       {:memoize, "~> 1.2"},
       {:power_assert, "~> 0.1.2", only: :test}
     ]
