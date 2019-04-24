@@ -41,6 +41,7 @@ defmodule Yacto.Mixfile do
       {:mariaex, "~> 0.9.1"},
       {:elixir_uuid, "~> 1.2.0"},
       {:memoize, "~> 1.2"},
+      {:geo_postgis, "~> 3.1"},
       {:power_assert, "~> 0.1.2", only: :test}
     ]
   end
