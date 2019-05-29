@@ -437,9 +437,10 @@ defmodule Yacto.Migration.GenMigration do
               if Enum.empty?(generated_fields) do
                 generate_indices(diff.meta.indices, structure_to, migration_opts)
               else
-                ["alter table(#{inspect(structure_to.source)}) do"] ++
+                generate_indices(diff.meta.indices, structure_to, migration_opts) ++
+                  ["alter table(#{inspect(structure_to.source)}) do"] ++
                   generated_fields ++
-                  ["end"] ++ generate_indices(diff.meta.indices, structure_to, migration_opts)
+                  ["end"]
               end
           end
 
